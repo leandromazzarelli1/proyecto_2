@@ -63,8 +63,9 @@ class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = 64;
-        this.height = 64;
+        this.width = 32; // Tighter Hitbox (was 64)
+        this.height = 48; // Tighter Height (was 64)
+        this.drawSize = 64; // Visual Size
         this.vx = 0;
         this.vy = 0;
         this.isGrounded = false;
@@ -212,11 +213,13 @@ class Player {
         const sprite = gameState.assets.sprites[this.frameIndex];
         if (sprite && sprite.complete) {
             ctx.save();
+            // Translate to center of Physics Body
             ctx.translate(Math.floor(this.x) + this.width / 2, Math.floor(this.y) + this.height / 2);
             if (!this.facingRight) {
                 ctx.scale(-1, 1);
             }
-            ctx.drawImage(sprite, -this.width / 2, -this.height / 2, this.width, this.height);
+            // Draw visual sprite larger and centered
+            ctx.drawImage(sprite, -this.drawSize / 2, -this.drawSize / 2, this.drawSize, this.drawSize);
             ctx.restore();
         } else {
         }
@@ -266,7 +269,7 @@ const switchRoom = (index, spawnX) => {
     gameState.enemies = [];
 
     // Spawn Slime in Room 2
-    if (index === 1) { // Room 2 is index 1
+    if (index === 2) { // Room 2 is index 1
         // Place it on the center island
         gameState.enemies.push(new Enemy(400, 300));
     }
@@ -410,13 +413,17 @@ const gameLoop = () => {
                 gameState.player.y < enemy.y + enemy.height &&
                 gameState.player.y + gameState.player.height > enemy.y
             ) {
-                // Collision! Bounce Player
-                console.log("Player Hit!");
-                // Push player away
-                if (gameState.player.x < enemy.x) gameState.player.vx = -10;
-                else gameState.player.vx = 10;
-
-                gameState.player.vy = -5; // Small hop
+                // Body Block (Solid Collision)
+                // Just push player out of the enemy, don't add knockback velocity
+                if (gameState.player.x + gameState.player.width / 2 < enemy.x + enemy.width / 2) {
+                    // Player is on Left
+                    gameState.player.x = enemy.x - gameState.player.width;
+                } else {
+                    // Player is on Right
+                    gameState.player.x = enemy.x + enemy.width;
+                }
+                // Stop momentum slightly to feel weight
+                // gameState.player.vx = 0; 
             }
         });
     }
