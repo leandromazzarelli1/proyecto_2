@@ -1,6 +1,7 @@
 const room2 = {
-    bgSrc: 'cave_background_2.png',
-    bgType: 'image',
+    bgSrc: 'cave_background_2_animated.mp4',
+    bgType: 'video',
+    playbackSpeed: 0.6, // Increased for fluidity
     // Room 2: Islands (No Bridges)
     staticLines: [
         // Top Left Island

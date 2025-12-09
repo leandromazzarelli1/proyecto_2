@@ -1,2 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego IA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <h1>Juego de Plataformas</h1>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <p>Controles: A (Izquierda), D (Derecha), W (Saltar)</p>
+    </div>
+
+    <!-- Cargar assets de niveles primero -->
+    <script src="room1.js"></script>
+    <script src="room2.js"></script>
+    <script src="room3.js"></script>
+    <script src="room5.js"></script>
+    <script src="slime.js"></script>
+    <!-- Cargar lógica del juego -->
+    <script src="game.js"></script>
+</body>
+
+</html>

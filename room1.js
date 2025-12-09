@@ -1,6 +1,6 @@
 const room1 = {
-    bgSrc: 'cave_background.png',
-    bgType: 'image',
+    bgSrc: 'cave_background_1_animated.mp4',
+    bgType: 'video',
     // Room 1: Arch Bridge (Connected Path)
     terrain: [
         { x: 0, y: 450 },
